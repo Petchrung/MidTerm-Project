@@ -6,12 +6,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public GameObject gameOverUI;
-    public GameObject startUI; // ⭐ เพิ่ม
+    public GameObject restartButton;   // ⭐ เพิ่ม
+    public GameObject startUI;
     public TextMeshProUGUI scoreText;
 
     private float timeSurvived = 0f;
     private bool isGameOver = false;
-    private bool isGameStarted = false; // ⭐ เพิ่ม
+    private bool isGameStarted = false;
 
     void Awake()
     {
@@ -20,7 +21,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 0f; // ⭐ หยุดเกมตอนเริ่ม
+        Time.timeScale = 0f;
+
+        if (gameOverUI != null)
+            gameOverUI.SetActive(false);
+
+        if (restartButton != null)
+            restartButton.SetActive(false);
     }
 
     void Update()
@@ -35,16 +42,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartGame() // ⭐ ปุ่ม START จะเรียกอันนี้
+    public void StartGame()
     {
         isGameStarted = true;
 
         if (startUI != null)
         {
-            startUI.SetActive(false); // ซ่อน UI
+            startUI.SetActive(false);
         }
 
-        Time.timeScale = 1f; // เริ่มเวลา
+        Time.timeScale = 1f;
     }
 
     public void GameOver()
@@ -56,6 +63,11 @@ public class GameManager : MonoBehaviour
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(true);
+        }
+
+        if (restartButton != null)
+        {
+            restartButton.SetActive(true);   // ⭐ สั่งให้ปุ่มโผล่
         }
 
         Time.timeScale = 0f;
